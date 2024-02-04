@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import ru.gb.homework5.aspects.TrackUserAction;
 import ru.gb.homework5.models.Task;
 import ru.gb.homework5.models.TaskStatus;
 import ru.gb.homework5.repositories.ITaskRepository;
@@ -21,19 +22,23 @@ public class TaskService {
         this.repository = repository;
     }
 
+    @TrackUserAction
     public Task addTask(Task task) {
         task.setCreationDate(LocalDateTime.now());
         return repository.save(task);
     }
 
+    @TrackUserAction
     public List<Task> getAllTasks() {
         return repository.findAll();
     }
 
+    @TrackUserAction
     public List<Task> getTaskByStatus(TaskStatus status) {
         return repository.findTasksByStatus(status);
     }
 
+    @TrackUserAction
     public Task updateTaskStatus(Long id, Task taskDetails) {
         Optional<Task> optionalTask = repository.findById(id);
         if (optionalTask.isPresent()) {
@@ -45,6 +50,7 @@ public class TaskService {
         }
     }
 
+    @TrackUserAction
     public void deleteTask(Long id) {
         repository.deleteById(id);
     }
