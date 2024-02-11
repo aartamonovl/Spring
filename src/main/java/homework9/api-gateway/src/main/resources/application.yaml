@@ -1,0 +1,17 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: Micro1
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/M1/**
+        - id: MainApp
+          uri: http://localhost:8080/
+          predicates:
+            - Path=/main-app/**
