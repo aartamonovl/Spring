@@ -11,32 +11,59 @@ import java.util.List;
 @RequestMapping("/main-app")
 public class TaskController {
 
+    /**
+     * Сервис обработки задач
+     */
     private final TaskService service;
+
 
     public TaskController(TaskService service) {
         this.service = service;
     }
 
+    /**
+     * Добавление задачи
+     * @param task задача
+     * @return задача
+     */
     @PostMapping
     public Task addTask(@RequestBody Task task) {
         return service.addTask(task);
     }
 
+    /**
+     * Получение всех задач
+     * @return лист задач
+     */
     @GetMapping
     public List<Task> getAllTasks() {
         return service.getAllTasks();
     }
 
+    /**
+     * Получение списка задач по статусу
+     * @param status статус
+     * @return лист задач
+     */
     @GetMapping("/status/{status}")
     public List<Task> getTaskByStatus(@PathVariable TaskStatus status) {
         return service.getTaskByStatus(status);
     }
 
-    @PutMapping("/{id}")
-    public Task updateTaskStatus(@PathVariable Long id, @RequestBody Task task) {
-        return service.updateTaskStatus(id, task);
+    /**
+     * Обновление задачи
+     * @param task обновленная задача
+     * @return задача
+     */
+    @PutMapping()
+    public Task updateTaskStatus(@RequestBody Task task) {
+        return service.updateTaskStatus(task);
     }
 
+    /**
+     * Удаление задачи
+     * @param id идентификатор задачи
+     */
     @DeleteMapping("/{id}")
     public void deleteTask(@PathVariable Long id) {
         service.deleteTask(id);
