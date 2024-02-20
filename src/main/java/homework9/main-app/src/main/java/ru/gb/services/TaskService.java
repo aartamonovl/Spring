@@ -17,7 +17,7 @@ public class TaskService {
      */
     private final ITaskRepository repository;
 
-    public TaskService(ITaskRepository repository) {
+    public TaskService(ITaskRepository repository, FileGateway fileGateway) {
         this.repository = repository;
     }
 
@@ -29,6 +29,15 @@ public class TaskService {
     public Task addTask(Task task) {
         task.setCreationDate(LocalDateTime.now());
         return repository.save(task);
+    }
+
+    /**
+     * Поиск задачи по идентификатору
+     * @param id идентификатор задачи
+     * @return задача или null
+     */
+    public Task findTaskById(Long id){
+        return repository.findById(id).orElse(null);
     }
 
     /**
